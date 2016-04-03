@@ -1,0 +1,89 @@
+FUNCTION_BLOCK fieldHandlingPriority	// block definition
+
+VAR_INPUT				// input variables
+	irrigation : REAL;
+	soilRichness : REAL;	
+	distance : REAL;
+END_VAR
+
+VAR_OUTPUT 			// output variables
+	 priority : REAL;
+END_VAR
+
+FUZZIFY irrigation // scale 0-100
+	TERM dry := (0,1) (25,1) (50,0);
+	TERM low := (25,0) (50,1)(75,0);
+	TERM optimal :=(50,0) (75,1) (100, 1);
+END_FUZZIFY
+
+FUZZIFY soilRichness // scale 0-100
+	TERM low := (0,1) (25,1) (50,0);
+	TERM medium := (25,0) (50,1) (75,0);
+	TERM optimal :=(50,0) (75,1) (100, 1);
+END_FUZZIFY
+
+FUZZIFY distance // scale 0-100 (calculate: 100 = maximum distance - width+length-2 of the WHOLE FIELD)
+	TERM veryClose := (0,1) (10,1) (25,0);
+	TERM close := (10,0)(25,1)(40,1) (50,0);
+	TERM fairlyFar := (40,0) (50,1) (75,0);
+	TERM veryFar := (50,0) (75,1) (100, 1);
+END_FUZZIFY
+	
+DEFUZZIFY priority // 	
+	TERM nearlyZero := (0,1) (15,1)(25,0);
+	TERM low := (15, 0) (25,1) (35, 1)(45,0);
+	TERM medium := (35, 0) (45,1) (55,1) (65,0);
+	TERM high := (55, 0) (65,1) (75,1)(80,0);
+	TERM veryHigh := (75, 0) (80,1) (90,0);
+	TERM extreme := (80,0) (90,1) (100, 1);
+	METHOD : COG;		// defuziffy method - COG
+	DEFAULT := 0;		
+END_DEFUZZIFY
+
+RULEBLOCK No1
+	AND : MIN;			
+	ACCU : MAX;			
+
+
+	RULE 1 : IF soilRichness IS low AND irrigation IS dry AND distance IS veryClose THEN priority IS extreme;
+	RULE 2 : IF soilRichness IS low AND irrigation IS low AND distance IS veryClose THEN priority IS veryHigh;
+	RULE 3 : IF soilRichness IS low AND irrigation IS optimal AND distance IS veryClose THEN priority IS high;
+	RULE 4 : IF soilRichness IS medium AND irrigation IS dry AND distance IS veryClose THEN priority IS veryHigh;
+	RULE 5 : IF soilRichness IS medium AND irrigation IS low AND distance IS veryClose THEN priority IS medium;
+	RULE 6 : IF soilRichness IS medium AND irrigation IS optimal AND distance IS veryClose THEN priority IS low;
+	RULE 7 : IF soilRichness IS optimal AND irrigation IS dry AND distance IS veryClose THEN priority IS high;
+	RULE 8 : IF soilRichness IS optimal AND irrigation IS low AND distance IS veryClose THEN priority IS low;
+	RULE 9 : IF soilRichness IS optimal AND irrigation IS optimal AND distance IS veryClose THEN priority IS nearlyZero;
+	
+	RULE 10 : IF soilRichness IS low AND irrigation IS dry AND distance IS close THEN priority IS veryHigh;
+	RULE 11 : IF soilRichness IS low AND irrigation IS low AND distance IS close THEN priority IS high;
+	RULE 12 : IF soilRichness IS low AND irrigation IS optimal AND distance IS close THEN priority IS medium;
+	RULE 13 : IF soilRichness IS medium AND irrigation IS dry AND distance IS close THEN priority IS high;
+	RULE 14 : IF soilRichness IS medium AND irrigation IS low AND distance IS close THEN priority IS low;
+	RULE 15 : IF soilRichness IS medium AND irrigation IS optimal AND distance IS close THEN priority IS low;
+	RULE 16 : IF soilRichness IS optimal AND irrigation IS dry AND distance IS close THEN priority IS medium;
+	RULE 17 : IF soilRichness IS optimal AND irrigation IS low AND distance IS close THEN priority IS low;
+	RULE 18 : IF soilRichness IS optimal AND irrigation IS optimal AND distance IS close THEN priority IS nearlyZero;
+	
+	RULE 19 : IF soilRichness IS low AND irrigation IS dry AND distance IS fairlyFar THEN priority IS high;
+	RULE 20 : IF soilRichness IS low AND irrigation IS low AND distance IS fairlyFar THEN priority IS medium;
+	RULE 21 : IF soilRichness IS low AND irrigation IS optimal AND distance IS fairlyFar THEN priority IS low;
+	RULE 22 : IF soilRichness IS medium AND irrigation IS dry AND distance IS fairlyFar THEN priority IS medium;
+	RULE 23 : IF soilRichness IS medium AND irrigation IS low AND distance IS fairlyFar THEN priority IS low;
+	RULE 24 : IF soilRichness IS medium AND irrigation IS optimal AND distance IS fairlyFar THEN priority IS nearlyZero;
+	RULE 25 : IF soilRichness IS optimal AND irrigation IS dry AND distance IS fairlyFar THEN priority IS low;
+	RULE 26 : IF soilRichness IS optimal AND irrigation IS low AND distance IS fairlyFar THEN priority IS nearlyZero;
+	RULE 27 : IF soilRichness IS optimal AND irrigation IS optimal AND distance IS fairlyFar THEN priority IS nearlyZero;
+	
+	RULE 28 : IF soilRichness IS low AND irrigation IS dry AND distance IS veryFar THEN priority IS medium;
+	RULE 29 : IF soilRichness IS low AND irrigation IS low AND distance IS veryFar THEN priority IS low;
+	RULE 30 : IF soilRichness IS low AND irrigation IS optimal AND distance IS veryFar THEN priority IS nearlyZero;
+	RULE 31 : IF soilRichness IS medium AND irrigation IS dry AND distance IS veryFar THEN priority IS low;
+	RULE 32 : IF soilRichness IS medium AND irrigation IS low AND distance IS veryFar THEN priority IS nearlyZero;
+	RULE 33 : IF soilRichness IS medium AND irrigation IS optimal AND distance IS veryFar THEN priority IS nearlyZero;
+	RULE 34 : IF soilRichness IS optimal AND irrigation IS dry AND distance IS veryFar THEN priority IS nearlyZero;
+	RULE 35 : IF soilRichness IS optimal AND irrigation IS low AND distance IS veryFar THEN priority IS nearlyZero;
+	RULE 36 : IF soilRichness IS optimal AND irrigation IS optimal AND distance IS veryFar THEN priority IS nearlyZero;
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK
