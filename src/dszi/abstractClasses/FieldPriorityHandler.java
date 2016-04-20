@@ -5,7 +5,7 @@
  */
 package dszi.abstractClasses;
 
-import dszi.logic.Field;
+import dszi.model.Field;
 
 /**
  *
