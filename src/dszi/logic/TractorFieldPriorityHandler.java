@@ -7,20 +7,22 @@ package dszi.logic;
 
 import dszi.abstractClasses.FieldPriorityHandler;
 import dszi.abstractClasses.Location2D;
-import java.awt.Dimension;
+
 import java.io.IOException;
+
+import dszi.model.Field;
 import net.sourceforge.jFuzzyLogic.FIS;
 
 /**
  *
  * @author Karol Mazurek <kmazurek93@gmail.com>
  */
-public class TractorFPH implements FieldPriorityHandler {
+public class TractorFieldPriorityHandler implements FieldPriorityHandler {
     
     private final FIS fuzzyLogicHandler;
     private Integer xSize;
     private Integer ySize;
-    public TractorFPH(String fclFileName, boolean verboseMode, Integer xSize, Integer ySize) throws IOException {
+    public TractorFieldPriorityHandler(String fclFileName, boolean verboseMode, Integer xSize, Integer ySize) throws IOException {
         fuzzyLogicHandler = FIS.load(fclFileName, verboseMode);
         if (fuzzyLogicHandler == null) {
             throw new IOException("Cannot load file " + fclFileName);

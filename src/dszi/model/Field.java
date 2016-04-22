@@ -3,23 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dszi.logic;
+package dszi.model;
+
+import dszi.logic.Location;
 
 /**
- *
  * @author Karol Mazurek <kmazurek93@gmail.com>
  */
-public class Field {
+public class Field implements Comparable<Field> {
 
     private Double irrigation;
     private Double soilRichness;
     private Location location;
+    private Double priority;
 
     public Field(Double irrigation, Double soilRichness) {
         this.irrigation = irrigation;
         this.soilRichness = soilRichness;
         this.location = new Location(-1, -1);
     }
+
 
     public Field(Double irrigation, Double soilRichness, Integer x, Integer y) {
         this.irrigation = irrigation;
@@ -50,6 +53,20 @@ public class Field {
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    public Double getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Double priority) {
+        this.priority = priority;
+    }
+
+    @Override
+    public int compareTo(Field o) {
+        double result = this.getPriority() - o.getPriority();
+        return (int) result;
     }
 
     //</editor-fold>
