@@ -1,4 +1,4 @@
-/build/
+build/
 # User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml
@@ -42,4 +42,4 @@ crashlytics-build.properties
 fabric.properties
 
 #nbproject should be ignored
-/nbproject/
+nbproject/
