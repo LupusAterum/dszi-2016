@@ -13,7 +13,7 @@ import java.util.Random;
 /**
  * Created by softra43 on 20.04.2016.
  */
-public class MainFuzzyLogicServiceHandler {
+public class MainFuzzyLogicServiceHandler implements Runnable{
 
     private MainTractorMovementLogicService mainTractorMovementLogicService;
 
@@ -74,7 +74,8 @@ public class MainFuzzyLogicServiceHandler {
         return fields.get(fields.size() - 1);
     }
 
-    public void mainLoop() {
+    @Override
+    public void run() {
         do {
             mainTractorMovementLogicService.calculateTractorTurn();
             try {

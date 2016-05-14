@@ -6,19 +6,28 @@
 package pl.edu.amu.dszi.pkg2016;
 
 import pl.edu.amu.dszi.logic.MainFuzzyLogicServiceHandler;
+import pl.edu.amu.dszi.logic.WeatherHandler;
 
 import java.io.IOException;
 
 /**
- *
  * @author Karol Mazurek <kmazurek93@gmail.com>
  */
 //this is test case!!!
 public class Main {
 
     public static void main(String[] args) throws IOException {
+
         MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
-        mainFuzzyLogicServiceHandler.mainLoop();
+        Thread mainFuzzyLogicThread = new Thread(mainFuzzyLogicServiceHandler);
+        mainFuzzyLogicThread.start();
+//        weather observer test
+//        WeatherObserver wo = new WeatherObserver();
+//        WeatherHandler wh = WeatherHandler.getInstance();
+//        wh.addObserver(wo);
+//        Thread weatherThread = new Thread(wh);
+//        weatherThread.start();
     }
-    
+
 }
+

@@ -3,9 +3,11 @@ package pl.edu.amu.dszi.model;
 /**
  * Created by lupus on 14.05.16.
  */
-public class Wheater {
-    public enum RainType {SNOW, HEAVY_RAIN, RAIN, STORM}
+public class Weather {
+    public enum RainType {HEAVY_RAIN, MEDIUM_RAIN, LIGHT_RAIN, NO_RAIN, STORM}
+
     public enum Sky {CLEAR, LIGHT_CLOUDS, MEDIUM_CLOUDS, HEAVY_CLOUDS}
+
     public enum FogType {NO_FOG, LIGHT, MEDIUM, HEAVY}
 
     RainType rain;
@@ -13,11 +15,12 @@ public class Wheater {
     FogType fog;
     Double temperature;
 
-    public Wheater() {
+    public Weather() {
         super();
     }
 
-    public Wheater(RainType rain, Sky sky, FogType fog, Double temperature) {
+    public Weather(RainType rain, Sky sky, FogType fog, Double temperature) {
+        super();
         this.rain = rain;
         this.sky = sky;
         this.fog = fog;
