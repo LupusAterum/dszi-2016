@@ -1,9 +1,9 @@
-package dszi.view;
+package pl.edu.amu.dszi.view;
 
-import dszi.model.Field;
-import dszi.model.GrassType;
-import dszi.logic.Location;
-import dszi.model.Tractor;
+import pl.edu.amu.dszi.model.Field;
+import pl.edu.amu.dszi.model.GrassType;
+import pl.edu.amu.dszi.logic.Location;
+import pl.edu.amu.dszi.model.Tractor;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

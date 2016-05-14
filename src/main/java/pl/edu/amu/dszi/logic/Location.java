@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dszi.logic;
+package pl.edu.amu.dszi.logic;
 
-import dszi.abstractClasses.Location2D;
+import pl.edu.amu.dszi.abstractClasses.Location2D;
 
 /**
  *

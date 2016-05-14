@@ -1,6 +1,6 @@
-package dszi.model;
+package pl.edu.amu.dszi.model;
 
-import dszi.logic.Location;
+import pl.edu.amu.dszi.logic.Location;
 
 /**
  * Created by softra43 on 20.04.2016.

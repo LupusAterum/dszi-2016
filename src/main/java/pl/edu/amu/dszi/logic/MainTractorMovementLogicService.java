@@ -1,6 +1,6 @@
-package dszi.logic;
+package pl.edu.amu.dszi.logic;
 
-import dszi.model.Tractor;
+import pl.edu.amu.dszi.model.Tractor;
 
 import java.util.Random;
 

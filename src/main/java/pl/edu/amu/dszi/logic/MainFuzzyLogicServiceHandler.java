@@ -1,9 +1,9 @@
-package dszi.logic;
+package pl.edu.amu.dszi.logic;
 
-import dszi.abstractClasses.FieldPriorityHandler;
-import dszi.model.Field;
-import dszi.model.Tractor;
-import dszi.pkg2016.WindowManager;
+import pl.edu.amu.dszi.abstractClasses.FieldPriorityHandler;
+import pl.edu.amu.dszi.model.Field;
+import pl.edu.amu.dszi.model.Tractor;
+import pl.edu.amu.dszi.pkg2016.WindowManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class MainFuzzyLogicServiceHandler {
 
         Location tractorLocation = new Location(3, 2);
         System.out.println("Maximum distance: 8");
-        for(Field f : fields) {
+        for (Field f : fields) {
             String toFormat = "Location x: %d, y: %d | irrigation: %.3f | soilRichness: %.3f | ManhattanDistance: %d | Priority: %.3f\n";
             f.setPriority(handler.getFieldPriority(f, tractorLocation));
             System.out.printf(toFormat,
@@ -59,7 +59,7 @@ public class MainFuzzyLogicServiceHandler {
                     f.getPriority());
         }
 
-        Tractor tractor = new Tractor(new Location(1,1));
+        Tractor tractor = new Tractor(new Location(1, 1));
 
         windowManager = new WindowManager();
         windowManager.repaint();

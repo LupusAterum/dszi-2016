@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dszi.pkg2016;
+package pl.edu.amu.dszi.pkg2016;
 
-import dszi.logic.MainFuzzyLogicServiceHandler;
+import pl.edu.amu.dszi.logic.MainFuzzyLogicServiceHandler;
 
 import java.io.IOException;
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dszi.model;
+package pl.edu.amu.dszi.model;
 
-import dszi.logic.Location;
+import pl.edu.amu.dszi.logic.Location;
 
 /**
  * @author Karol Mazurek <kmazurek93@gmail.com>
@@ -63,7 +63,7 @@ public class Field implements Comparable<Field> {
         this.priority = priority;
     }
 
-    @Override
+
     public int compareTo(Field o) {
         double result = this.getPriority() - o.getPriority();
         return (int) result;

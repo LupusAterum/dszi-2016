@@ -1,4 +1,4 @@
-package dszi.model;
+package pl.edu.amu.dszi.model;
 
 /**
  * Created by softra43 on 20.04.2016.
