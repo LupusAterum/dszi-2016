@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/dszi-2016.iml" filepath="$PROJECT_DIR$/dszi-2016.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dszi.iml" filepath="$PROJECT_DIR$/.idea/modules/dszi.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dszi_main.iml" filepath="$PROJECT_DIR$/.idea/modules/dszi_main.iml" group="dszi" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/dszi_test.iml" filepath="$PROJECT_DIR$/.idea/modules/dszi_test.iml" group="dszi" />
     </modules>
   </component>
 </project>

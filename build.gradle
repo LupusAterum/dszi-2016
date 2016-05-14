@@ -1,14 +1,38 @@
+plugins {
+    id 'java' // or 'groovy' Must be explicitly applied
+    id 'com.github.johnrengelman.shadow' version '1.2.3'
+}
 group 'pl.edu.amu'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'idea'
 
 sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+}
+task copyResources(type: org.gradle.api.tasks.Copy) {
+    from 'res'
+    into 'build/libs/res'
+}
+task makeJar() {
+    dependsOn = ['shadowJar', 'copyResources']
+    println 'jar will be made in build/libs'
+    println 'after succesfull compilation run:\nrun java -jar build/libs/JARNAME'
+}
+shadowJar {
+
+    manifest {
+        attributes("Implementation-Title": "Intelligent Tractor",
+                "Implementation-Version": version,
+        "Main-Class": "pl.edu.amu.dszi.pkg2016.Main")
+    }
+
 
 }
+
 
 dependencies {
     compile fileTree(dir: 'lib', include: ['*.jar'])
