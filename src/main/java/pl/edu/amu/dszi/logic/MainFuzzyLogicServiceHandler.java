@@ -50,13 +50,16 @@ public class MainFuzzyLogicServiceHandler implements Runnable{
         Location tractorLocation = new Location(3, 2);
         System.out.println("Maximum distance: 8");
         for (Field f : fields) {
-            String toFormat = "Location x: %d, y: %d | irrigation: %.3f | soilRichness: %.3f | ManhattanDistance: %d | Priority: %.3f\n";
+//            String toFormat = "Location x: %d, y: %d | irrigation: %.3f | soilRichness: %.3f | ManhattanDistance: %d | Priority: %.3f\n";
+            String toFormat = "%d,%.3f,%.3f,%.3f\n";
             f.setPriority(handler.getFieldPriority(f, tractorLocation));
-            System.out.printf(toFormat,
-                    f.getLocation().getX(), f.getLocation().getY(),
-                    f.getIrrigation(), f.getSoilRichness(),
-                    f.getLocation().getManhattanDistanceTo(tractorLocation),
-                    f.getPriority());
+//            System.out.printf(toFormat,
+//                    f.getLocation().getX(), f.getLocation().getY(),
+//                    f.getIrrigation(), f.getSoilRichness(),
+//                    f.getLocation().getManhattanDistanceTo(tractorLocation),
+//                    f.getPriority());
+            System.out.printf(toFormat, f.getLocation().getManhattanDistanceTo(tractorLocation),
+                    f.getIrrigation(), f.getSoilRichness(), f.getPriority());
         }
 
         Tractor tractor = new Tractor(new Location(1, 1));

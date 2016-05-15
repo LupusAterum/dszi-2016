@@ -4,26 +4,22 @@ package pl.edu.amu.dszi.model;
  * Created by lupus on 14.05.16.
  */
 public class Weather {
-    public enum RainType {HEAVY_RAIN, MEDIUM_RAIN, LIGHT_RAIN, NO_RAIN, STORM}
+    public enum RainType {NO_RAIN, LIGHT_RAIN, MEDIUM_RAIN, HEAVY_RAIN}
 
-    public enum Sky {CLEAR, LIGHT_CLOUDS, MEDIUM_CLOUDS, HEAVY_CLOUDS}
+    public enum SunType {NO_SUN, PARTLY_CLOUDY, FULL_SUN, HOT_SUN}
 
-    public enum FogType {NO_FOG, LIGHT, MEDIUM, HEAVY}
-
-    RainType rain;
-    Sky sky;
-    FogType fog;
-    Double temperature;
+    private RainType rain;
+    private SunType sunType;
+    private Double temperature;
 
     public Weather() {
         super();
     }
 
-    public Weather(RainType rain, Sky sky, FogType fog, Double temperature) {
+    public Weather(RainType rain, SunType sunType, Double temperature) {
         super();
         this.rain = rain;
-        this.sky = sky;
-        this.fog = fog;
+        this.sunType = sunType;
         this.temperature = temperature;
     }
 
@@ -36,20 +32,12 @@ public class Weather {
         this.rain = rain;
     }
 
-    public Sky getSky() {
-        return sky;
+    public SunType getSunType() {
+        return sunType;
     }
 
-    public void setSky(Sky sky) {
-        this.sky = sky;
-    }
-
-    public FogType getFog() {
-        return fog;
-    }
-
-    public void setFog(FogType fog) {
-        this.fog = fog;
+    public void setSunType(SunType sunType) {
+        this.sunType = sunType;
     }
 
     public Double getTemperature() {
