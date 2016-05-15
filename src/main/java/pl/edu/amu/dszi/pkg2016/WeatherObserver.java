@@ -1,7 +1,7 @@
 package pl.edu.amu.dszi.pkg2016;
 
 import pl.edu.amu.dszi.logic.WeatherHandler;
-import pl.edu.amu.dszi.model.Weather;
+import pl.edu.amu.dszi.model.weather.Weather;
 
 import java.util.Observable;
 import java.util.Observer;

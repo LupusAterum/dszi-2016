@@ -1,12 +1,9 @@
-package pl.edu.amu.dszi.model;
+package pl.edu.amu.dszi.model.weather;
 
 /**
  * Created by lupus on 14.05.16.
  */
 public class Weather {
-    public enum RainType {NO_RAIN, LIGHT_RAIN, MEDIUM_RAIN, HEAVY_RAIN}
-
-    public enum SunType {NO_SUN, PARTLY_CLOUDY, FULL_SUN, HOT_SUN}
 
     private RainType rain;
     private SunType sunType;

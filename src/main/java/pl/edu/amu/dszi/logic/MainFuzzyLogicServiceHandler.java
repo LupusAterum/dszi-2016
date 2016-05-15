@@ -48,7 +48,6 @@ public class MainFuzzyLogicServiceHandler implements Runnable{
         }
 
         Location tractorLocation = new Location(3, 2);
-        System.out.println("Maximum distance: 8");
         for (Field f : fields) {
 //            String toFormat = "Location x: %d, y: %d | irrigation: %.3f | soilRichness: %.3f | ManhattanDistance: %d | Priority: %.3f\n";
             String toFormat = "%d,%.3f,%.3f,%.3f\n";
