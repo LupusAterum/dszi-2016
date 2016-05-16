@@ -1,11 +1,12 @@
 package pl.edu.amu.dszi.pkg2016;
 
+import pl.edu.amu.dszi.model.field.Field;
+import pl.edu.amu.dszi.model.Tractor;
+import pl.edu.amu.dszi.view.Panel;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import pl.edu.amu.dszi.model.Field;
-import pl.edu.amu.dszi.model.Tractor;
-import pl.edu.amu.dszi.view.Panel;
 
 /**
  * Created by softra43 on 20.04.2016.

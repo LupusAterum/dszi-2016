@@ -7,7 +7,7 @@ public class Weather {
 
     private RainType rain;
     private SunType sunType;
-    private Double temperature;
+
 
     public Weather() {
         super();
@@ -17,7 +17,6 @@ public class Weather {
         super();
         this.rain = rain;
         this.sunType = sunType;
-        this.temperature = temperature;
     }
 
     //<editor-fold desc="getters and setters">
@@ -37,12 +36,5 @@ public class Weather {
         this.sunType = sunType;
     }
 
-    public Double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(Double temperature) {
-        this.temperature = temperature;
-    }
     //</editor-fold>
 }

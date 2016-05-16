@@ -5,7 +5,7 @@
  */
 package pl.edu.amu.dszi.abstractClasses;
 
-import pl.edu.amu.dszi.model.Field;
+import pl.edu.amu.dszi.model.field.Field;
 
 /**
  *

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.amu.dszi.logic;
+package pl.edu.amu.dszi.logic.tractor;
 
 import pl.edu.amu.dszi.abstractClasses.FieldPriorityHandler;
 import pl.edu.amu.dszi.abstractClasses.Location2D;
 
 import java.io.IOException;
 
-import pl.edu.amu.dszi.model.Field;
+import pl.edu.amu.dszi.model.field.Field;
 import net.sourceforge.jFuzzyLogic.FIS;
 
 import static net.sourceforge.jFuzzyLogic.FIS.*;

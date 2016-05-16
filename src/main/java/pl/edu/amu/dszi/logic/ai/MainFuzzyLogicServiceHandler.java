@@ -1,7 +1,10 @@
-package pl.edu.amu.dszi.logic;
+package pl.edu.amu.dszi.logic.ai;
 
 import pl.edu.amu.dszi.abstractClasses.FieldPriorityHandler;
-import pl.edu.amu.dszi.model.Field;
+import pl.edu.amu.dszi.model.field.Location;
+import pl.edu.amu.dszi.logic.tractor.MainTractorMovementLogicService;
+import pl.edu.amu.dszi.logic.tractor.TractorFieldPriorityHandler;
+import pl.edu.amu.dszi.model.field.Field;
 import pl.edu.amu.dszi.model.Tractor;
 import pl.edu.amu.dszi.pkg2016.WindowManager;
 

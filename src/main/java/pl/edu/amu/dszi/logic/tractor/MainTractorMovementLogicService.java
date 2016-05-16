@@ -1,5 +1,6 @@
-package pl.edu.amu.dszi.logic;
+package pl.edu.amu.dszi.logic.tractor;
 
+import pl.edu.amu.dszi.model.field.Location;
 import pl.edu.amu.dszi.model.Tractor;
 
 import java.util.Random;

@@ -3,18 +3,18 @@ package pl.edu.amu.dszi.model;
 /**
  * Created by lupus on 15.05.16.
  */
-public enum FertilizationOrIrrigationDecision {
+public enum LevelDecision {
     NO(0), LIGHT(1), MEDIUM(2), HEAVY(3);
 
     private int value;
-    FertilizationOrIrrigationDecision(int value) {
+    LevelDecision(int value) {
         this.value = value;
     }
     public int getValue() {
         return this.value;
     }
 
-    public static FertilizationOrIrrigationDecision getEnumFromInt(int param) {
+    public static LevelDecision getEnumFromInt(int param) {
         switch(param) {
             case 0:
                 return NO;

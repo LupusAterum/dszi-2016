@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package pl.edu.amu.dszi.model;
-
-import pl.edu.amu.dszi.logic.Location;
+package pl.edu.amu.dszi.model.field;
 
 /**
  * @author Karol Mazurek <kmazurek93@gmail.com>
