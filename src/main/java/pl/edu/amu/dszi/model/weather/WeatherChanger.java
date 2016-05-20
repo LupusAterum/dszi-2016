@@ -23,21 +23,23 @@ public class WeatherChanger extends GenericObservableRunnable {
     public static synchronized WeatherChanger getInstance() {
         if (instance == null)
             instance = new WeatherChanger();
+
         return instance;
     }
 
     @Override
     public void run() {
         while (!endThread) {
-
+            changeWeather();
+            notifyObservers(currentWeather);
+            System.out.println("Wheater Change");
             try {
                 Thread.sleep(generationRateMillis);
             } catch (InterruptedException e) {
                 System.out.println("Exceptilon");
             }
-            System.out.println("Wheater Change");
-            changeWeather();
-            notifyObservers(currentWeather);
+
+
         }
     }
 
@@ -56,4 +58,7 @@ public class WeatherChanger extends GenericObservableRunnable {
         endThread = true;
     }
 
+    public Weather getCurrentWeather() {
+        return this.currentWeather;
+    }
 }

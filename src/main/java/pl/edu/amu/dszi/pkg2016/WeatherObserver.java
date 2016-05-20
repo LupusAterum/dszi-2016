@@ -10,14 +10,18 @@ import java.util.Observer;
  * Created by lupus on 14.05.16.
  */
 public class WeatherObserver implements Observer {
+    private Weather currentWeather;
     @Override
     public void update(Observable o, Object arg) {
         if (o instanceof WeatherChanger) {
             if (arg instanceof Weather) {
-                Weather w = (Weather) arg;
-                System.out.println("SUN: " + w.getSunType());
-                System.out.println("RAIN: " + w.getRain());
+                currentWeather = (Weather) arg;
+                System.out.println("SUN: " + currentWeather.getSunType());
+                System.out.println("RAIN: " + currentWeather.getRain());
             }
         }
+    }
+    public Weather getWeather() {
+        return currentWeather;
     }
 }

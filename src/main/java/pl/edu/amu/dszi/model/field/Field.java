@@ -66,6 +66,11 @@ public class Field implements Comparable<Field> {
         double result = this.getPriority() - o.getPriority();
         return (int) result;
     }
-
+    public void degrade(int irrDeg, int soilDeg) {
+        irrigation -= irrDeg;
+        soilRichness -= soilDeg;
+        if(irrigation < 0) irrigation = 0d;
+        if(soilRichness < 0) soilRichness = 0d;
+    }
     //</editor-fold>
 }

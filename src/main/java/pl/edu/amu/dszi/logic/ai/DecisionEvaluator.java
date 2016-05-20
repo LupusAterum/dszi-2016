@@ -1,6 +1,6 @@
 package pl.edu.amu.dszi.logic.ai;
 
-import pl.edu.amu.dszi.model.LevelDecision;
+import pl.edu.amu.dszi.model.LevelledDecision;
 import pl.edu.amu.dszi.model.weather.RainType;
 import pl.edu.amu.dszi.model.weather.SunType;
 import weka.classifiers.Classifier;
@@ -35,8 +35,8 @@ public class DecisionEvaluator {
 
     }
 
-    public LevelDecision calassifyFertilization(double priority, double soilRichness,
-                                                double irrigation) throws Exception {
+    public LevelledDecision calassifyFertilization(double priority, double soilRichness,
+                                                   double irrigation) throws Exception {
         Instance currentInstance = new DenseInstance(4);
         currentInstance.setValue(0, priority);
         currentInstance.setValue(1, soilRichness);
@@ -44,11 +44,11 @@ public class DecisionEvaluator {
         currentInstance.setMissing(3);
         currentInstance.setDataset(fertilizationDecisionTrainSet);
         double toReturn = fertilizationDecisionTree.classifyInstance(currentInstance);
-        return LevelDecision.getEnumFromInt((int) toReturn);
+        return LevelledDecision.getEnumFromInt((int) toReturn);
     }
 
-    public LevelDecision classifyIrrigation(double irrigation, SunType sunType,
-                                            RainType rainType) throws Exception {
+    public LevelledDecision classifyIrrigation(double irrigation, SunType sunType,
+                                               RainType rainType) throws Exception {
         Instance toTest = new DenseInstance(4);
         toTest.setValue(0, irrigation);
         toTest.setValue(1, (double) sunType.getValue());
@@ -56,7 +56,7 @@ public class DecisionEvaluator {
         toTest.setMissing(3);
         toTest.setDataset(irrigationDecisionTrainSet);
         double toReturn = irrigationDecisionTree.classifyInstance(toTest);
-        return LevelDecision.getEnumFromInt((int) toReturn);
+        return LevelledDecision.getEnumFromInt((int) toReturn);
     }
 
 }
