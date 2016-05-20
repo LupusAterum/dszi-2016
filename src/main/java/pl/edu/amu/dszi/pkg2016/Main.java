@@ -7,7 +7,9 @@ package pl.edu.amu.dszi.pkg2016;
 
 import pl.edu.amu.dszi.logic.ai.MainFuzzyLogicServiceHandler;
 import pl.edu.amu.dszi.model.FieldDegradator;
+import pl.edu.amu.dszi.model.Tractor;
 import pl.edu.amu.dszi.model.weather.WeatherChanger;
+import pl.edu.amu.dszi.view.DiagnosticWindow;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ import java.io.IOException;
 public class Main {
     public static boolean DEBUG = true;
     public static void main(String[] args) throws Exception {
+        WeatherChanger.getInstance().addObserver(Tractor.getInstance());
         Thread weatherChangerThread = new Thread(WeatherChanger.getInstance());
         weatherChangerThread.start();
         MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
@@ -25,7 +28,7 @@ public class Main {
         mainFuzzyLogicThread.start();
         Thread fieldDegradeThread = new Thread(new FieldDegradator());
         fieldDegradeThread.start();
-
+        DiagnosticWindow.main(args);
     }
 
 }

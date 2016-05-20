@@ -11,7 +11,7 @@ import pl.edu.amu.dszi.abstractClasses.Location2D;
  *
  * @author Karol Mazurek <kmazurek93@gmail.com>
  */
-public class Location extends Location2D {
+public class Location extends Location2D implements Comparable<Location> {
 
     public Location(Integer x, Integer y) {
         super(x, y);
@@ -31,5 +31,27 @@ public class Location extends Location2D {
         Integer b = Math.abs(loc.getY() - this.y);
         return a+b;
     }
-    
+
+    @Override
+    public int compareTo(Location o) {
+        if(this.x == o.x) {
+            if(this.y == o.y) {
+                return 0;
+            }
+            else if(this.y < o.y) {
+                return -1;
+            }
+            else if(this.y > o.y) {
+                return 1;
+            }
+        } else {
+            if(this.x < o.x) {
+                return -1;
+            }
+            else if(this.x > o.x) {
+                return 1;
+            }
+        }
+        return 0;
+    }
 }

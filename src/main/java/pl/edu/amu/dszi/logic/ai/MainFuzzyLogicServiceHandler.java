@@ -71,7 +71,8 @@ public class MainFuzzyLogicServiceHandler implements Runnable {
     private void calculatePriorities(Location tractorLocation, TreeMap<Location, Field> fields) {
         for (Map.Entry<Location, Field> entry : fields.entrySet()) {
             Field f = entry.getValue();
-            f.setPriority(handler.getFieldPriority(f, tractorLocation));
+            fieldHandler.setFieldPriorityAt(entry.getKey(), handler.getFieldPriority(f, tractorLocation));
+
             if (Main.DEBUG) {
                 String toFormat = "D: %d, I: %.3f, R: %.3f, P: %.3f, X: %d, Y: %d\n";
                 System.out.printf(toFormat, f.getLocation().getManhattanDistanceTo(tractorLocation),
@@ -104,7 +105,7 @@ public class MainFuzzyLogicServiceHandler implements Runnable {
 //            }
             Field f = getFieldWhichTractorIsStandingOn();
             try {
-                System.out.printf("X: %d Y: %d]n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
+                System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
                 System.out.printf("Target X: %d Y: %d\n", mainTractorMovementLogicService.getTargetLocation().getX(), mainTractorMovementLogicService.getTargetLocation().getY());
                 Tractor.getInstance().makeFertilizationDecision(f);
                 Tractor.getInstance().makeIrrigationDecision(f);

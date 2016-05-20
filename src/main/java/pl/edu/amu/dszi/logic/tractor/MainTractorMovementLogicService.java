@@ -24,7 +24,9 @@ public class MainTractorMovementLogicService {
     }
 
     public void setTargetLocation(Location targetLocation) {
+
         this.targetLocation = targetLocation;
+        Tractor.getInstance().setTargetLocation(targetLocation);
     }
 
     // https://github.com/rogemus/SZI/blob/master/WaiterMovement.cpp

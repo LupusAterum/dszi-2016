@@ -1,22 +1,31 @@
 package pl.edu.amu.dszi.model;
 
 import javafx.collections.ObservableList;
+import pl.edu.amu.dszi.abstractClasses.FieldPriorityHandler;
+import pl.edu.amu.dszi.logic.tractor.TractorFieldPriorityHandler;
 import pl.edu.amu.dszi.model.field.Field;
 import pl.edu.amu.dszi.model.field.Location;
 
+import java.io.IOException;
 import java.util.*;
 
 /**
  * Created by lupus on 19.05.16.
  */
-public class FieldHandler {
+public class FieldHandler extends Observable {
     private static FieldHandler instance;
     private volatile TreeMap<Location, Field> fields;
     private Random r = new Random();
-
+    private FieldPriorityHandler handler;
     private FieldHandler() {
         fields = new TreeMap<>();
+        try {
+            handler = new TractorFieldPriorityHandler("res/fieldHandling.fcl", true, 8, 8);
+        } catch (IOException e) {
+            System.out.println("FATAL: CANNOT LOAD FCL FILE");
+        }
         generateFields();
+
     }
 
     public static synchronized FieldHandler getInstance() {
@@ -36,6 +45,13 @@ public class FieldHandler {
             }
 
         }
+        setChanged();
+        notifyObservers(fields);
+    }
+    public synchronized void setFieldPriorityAt(Location location, double priority) {
+        fields.get(location).setPriority(priority);
+        setChanged();
+        notifyObservers(fields);
     }
 
     public synchronized Field getFieldAt(Location location) {
@@ -55,7 +71,10 @@ public class FieldHandler {
                 l = entry.getKey();
             }
         }
-
         return fields.get(l);
+    }
+
+    public synchronized void calculatePriorites(Location tractorLocation) {
+
     }
 }

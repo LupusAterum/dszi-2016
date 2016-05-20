@@ -26,6 +26,7 @@ public class WindowManager extends JFrame {
         panel.setBackground(new Color(73, 207, 86));
         Container c = getContentPane();
         c.add(panel);
+        DiagnosticWindow d = new DiagnosticWindow();
 
 
         setVisible(true);
