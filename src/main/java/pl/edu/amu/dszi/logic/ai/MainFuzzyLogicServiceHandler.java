@@ -1,6 +1,7 @@
 package pl.edu.amu.dszi.logic.ai;
 
 import pl.edu.amu.dszi.abstractClasses.FieldPriorityHandler;
+import pl.edu.amu.dszi.model.FieldDegradator;
 import pl.edu.amu.dszi.model.FieldHandler;
 import pl.edu.amu.dszi.model.LevelledDecision;
 import pl.edu.amu.dszi.model.field.Location;
@@ -14,14 +15,12 @@ import pl.edu.amu.dszi.pkg2016.WeatherObserver;
 import pl.edu.amu.dszi.view.WindowManager;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Created by softra43 on 20.04.2016.
  */
-public class MainFuzzyLogicServiceHandler implements Runnable {
+public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
 
     private MainTractorMovementLogicService mainTractorMovementLogicService;
     private DecisionEvaluator decisionEvaluator;
@@ -47,10 +46,10 @@ public class MainFuzzyLogicServiceHandler implements Runnable {
             e.printStackTrace();
         }
         fieldHandler = FieldHandler.getInstance();
-
+        FieldDegradator.getInstance().addObserver(this);
 
         decisionEvaluator = new DecisionEvaluator();
-        Location tractorLocation = new Location(1, 1);
+        Location tractorLocation = new Location(3, 2);
         calculatePriorities(tractorLocation, fieldHandler.getFields());
 
         tractor = Tractor.getInstance();
@@ -65,7 +64,7 @@ public class MainFuzzyLogicServiceHandler implements Runnable {
         weatherChangerThread.start();
 
         mainTractorMovementLogicService
-                = new MainTractorMovementLogicService(fieldHandler.maxPriorityField().getLocation());
+                = new MainTractorMovementLogicService();
     }
 
     private void calculatePriorities(Location tractorLocation, TreeMap<Location, Field> fields) {
@@ -82,8 +81,6 @@ public class MainFuzzyLogicServiceHandler implements Runnable {
     }
 
 
-
-
     private Field getFieldWhichTractorIsStandingOn() {
         Location l = Tractor.getInstance().getLocation();
         return fieldHandler.getFieldAt(l);
@@ -92,31 +89,43 @@ public class MainFuzzyLogicServiceHandler implements Runnable {
     @Override
     public void run() {
         do {
-//            while (!mainTractorMovementLogicService.calculateTractorTurn()) {
-            try {
-                Thread.sleep(Tractor.getInstance().getLocation().getManhattanDistanceTo(mainTractorMovementLogicService.getTargetLocation()) * 1000);
-                Tractor.getInstance().setLocation(mainTractorMovementLogicService.getTargetLocation());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            while (!mainTractorMovementLogicService.calculateTractorTurn()) {
+                try {
+//                    Thread.sleep(Tractor.getInstance().getLocation().getManhattanDistanceTo(mainTractorMovementLogicService.getTargetLocation()) * 1000);
+                    Thread.sleep(1000);
+                    //Tractor.getInstance().setLocation(mainTractorMovementLogicService.getTargetLocation());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             windowManager.repaint();
             System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
-            System.out.printf("Target X: %d Y: %d\n", mainTractorMovementLogicService.getTargetLocation().getX(), mainTractorMovementLogicService.getTargetLocation().getY());
-//            }
-            Field f = getFieldWhichTractorIsStandingOn();
-            try {
-                System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
-                System.out.printf("Target X: %d Y: %d\n", mainTractorMovementLogicService.getTargetLocation().getX(), mainTractorMovementLogicService.getTargetLocation().getY());
-                Tractor.getInstance().makeFertilizationDecision(f);
-                Tractor.getInstance().makeIrrigationDecision(f);
-                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
-                mainTractorMovementLogicService.setTargetLocation(fieldHandler.maxPriorityField().getLocation());
-                windowManager.repaint();
+            System.out.printf("Target X: %d Y: %d\n", Tractor.getInstance().getTargetLocation().getX(), Tractor.getInstance().getTargetLocation().getY());
+        }
+        Field f = getFieldWhichTractorIsStandingOn();
+        try {
+            System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
+            System.out.printf("Target X: %d Y: %d\n", Tractor.getInstance().getTargetLocation().getX(), Tractor.getInstance().getTargetLocation().getY());
+            Tractor.getInstance().makeFertilizationDecision(f);
+            Tractor.getInstance().makeIrrigationDecision(f);
+            calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
+            Tractor.getInstance().setTargetLocation(fieldHandler.maxPriorityField().getLocation());
+            windowManager.repaint();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } while (!end);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    while(!end);
+}
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if(o instanceof FieldDegradator) {
+            if(arg == null) {
+
+                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
+            }
+        }
+    }
 }

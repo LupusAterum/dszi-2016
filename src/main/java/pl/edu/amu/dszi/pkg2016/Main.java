@@ -26,7 +26,7 @@ public class Main {
         MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
         Thread mainFuzzyLogicThread = new Thread(mainFuzzyLogicServiceHandler);
         mainFuzzyLogicThread.start();
-        Thread fieldDegradeThread = new Thread(new FieldDegradator());
+        Thread fieldDegradeThread = new Thread(FieldDegradator.getInstance());
         fieldDegradeThread.start();
         DiagnosticWindow.main(args);
     }
