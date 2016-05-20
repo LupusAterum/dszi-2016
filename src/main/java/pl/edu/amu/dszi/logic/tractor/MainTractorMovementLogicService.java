@@ -12,14 +12,11 @@ import static java.lang.Math.abs;
  */
 public class MainTractorMovementLogicService {
 
-    Location targetLocation;
+    volatile Location targetLocation;
 
-    Tractor tractor;
-
-    public MainTractorMovementLogicService(Location targetLocation, Tractor tractor) {
+    public MainTractorMovementLogicService(Location targetLocation) {
 
         this.targetLocation = targetLocation;
-        this.tractor = tractor;
     }
 
     public Location getTargetLocation() {
@@ -30,18 +27,10 @@ public class MainTractorMovementLogicService {
         this.targetLocation = targetLocation;
     }
 
-    public Tractor getTractor() {
-        return tractor;
-    }
-
-    public void setTractor(Tractor tractor) {
-        this.tractor = tractor;
-    }
-
     // https://github.com/rogemus/SZI/blob/master/WaiterMovement.cpp
     // true - jest u celu, w przeciwnym wypadku false
     public boolean calculateTractorTurn() {
-        Location tractorLocation = tractor.getLocation();
+        Location tractorLocation = Tractor.getInstance().getLocation();
         int x = tractorLocation.getX();
         int y = tractorLocation.getY();
 
@@ -49,7 +38,7 @@ public class MainTractorMovementLogicService {
 
         boolean axis;
         if (abs(targetLocation.getX() - tractorLocation.getX()) <= 1 &&
-                abs(targetLocation.getX() - tractorLocation.getX()) <= 1) {
+                abs(targetLocation.getY() - tractorLocation.getY()) <= 1) {
             return true;
         } else if (targetLocation.getX() == tractorLocation.getY()) {
             axis = false;
@@ -66,9 +55,10 @@ public class MainTractorMovementLogicService {
         } else {
             ay = (tractorLocation.getY() < targetLocation.getY()) ? 1 : -1;
         }
-
-        tractorLocation.setX(tractorLocation.getX() + ax);
-        tractorLocation.setY(tractorLocation.getY() + ay);
+        int xToWrite = tractorLocation.getX() + ax;
+        int yToWrite = tractorLocation.getY() + ay;
+        tractorLocation.setX(xToWrite < 0 ? 0 : xToWrite > 4 ? 4 : xToWrite);
+        tractorLocation.setY(yToWrite < 0 ? 0 : yToWrite > 4 ? 4 : yToWrite);
         return false;
     }
 

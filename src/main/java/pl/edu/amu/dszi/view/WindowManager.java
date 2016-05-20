@@ -1,5 +1,6 @@
-package pl.edu.amu.dszi.pkg2016;
+package pl.edu.amu.dszi.view;
 
+import pl.edu.amu.dszi.model.FieldHandler;
 import pl.edu.amu.dszi.model.field.Field;
 import pl.edu.amu.dszi.model.Tractor;
 import pl.edu.amu.dszi.view.Panel;
@@ -18,7 +19,7 @@ public class WindowManager extends JFrame {
     public WindowManager() {
         super();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(800, 600);
+        setSize(1024, 768);
         setBackground(Color.WHITE);
 
         panel = new Panel();
@@ -36,7 +37,7 @@ public class WindowManager extends JFrame {
 
     }
 
-    public void initMap(List<Field> fieldList, Tractor tractor) {
-        panel.initMap(fieldList, tractor);
+    public void initMap(Tractor tractor) {
+        panel.initMap(tractor);
     }
 }

@@ -6,6 +6,8 @@ package pl.edu.amu.dszi.pkg2016;
  */
 
 import pl.edu.amu.dszi.logic.ai.MainFuzzyLogicServiceHandler;
+import pl.edu.amu.dszi.model.FieldDegradator;
+import pl.edu.amu.dszi.model.weather.WeatherChanger;
 
 import java.io.IOException;
 
@@ -14,12 +16,15 @@ import java.io.IOException;
  */
 //this is test case!!!
 public class Main {
-
-    public static void main(String[] args) throws IOException, InterruptedException {
-
+    public static boolean DEBUG = true;
+    public static void main(String[] args) throws Exception {
+        Thread weatherChangerThread = new Thread(WeatherChanger.getInstance());
+        weatherChangerThread.start();
         MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
         Thread mainFuzzyLogicThread = new Thread(mainFuzzyLogicServiceHandler);
         mainFuzzyLogicThread.start();
+        Thread fieldDegradeThread = new Thread(new FieldDegradator());
+        fieldDegradeThread.start();
 
     }
 
