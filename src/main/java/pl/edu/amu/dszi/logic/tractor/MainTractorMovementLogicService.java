@@ -1,5 +1,6 @@
 package pl.edu.amu.dszi.logic.tractor;
 
+import pl.edu.amu.dszi.model.FieldHandler;
 import pl.edu.amu.dszi.model.field.Location;
 import pl.edu.amu.dszi.model.Tractor;
 
@@ -14,9 +15,9 @@ public class MainTractorMovementLogicService {
 
     volatile Location targetLocation;
 
-    public MainTractorMovementLogicService(Location targetLocation) {
-
-        this.targetLocation = targetLocation;
+    public MainTractorMovementLogicService() {
+        Location target = FieldHandler.getInstance().maxPriorityField().getLocation();
+        Tractor.getInstance().setTargetLocation(target);
     }
 
     public Location getTargetLocation() {
@@ -33,35 +34,59 @@ public class MainTractorMovementLogicService {
     // true - jest u celu, w przeciwnym wypadku false
     public boolean calculateTractorTurn() {
         Location tractorLocation = Tractor.getInstance().getLocation();
+//        int x = tractorLocation.getX();
+//        int y = tractorLocation.getY();
+//
+////        Random random = new Random();
+//
+//        boolean axis;
+//        if (abs(targetLocation.getX() - tractorLocation.getX()) <= 1 &&
+//                abs(targetLocation.getY() - tractorLocation.getY()) <= 1) {
+//            return true;
+//        } else if (targetLocation.getX() == tractorLocation.getY()) {
+//            axis = false;
+//        } else if (targetLocation.getX() == tractorLocation.getY()) {
+//            axis = true;
+//        } else {
+//            axis = (random.nextBoolean());
+//        }
+//
+//        int ax = 0;
+//        int ay = 0;
+//        if (axis) {
+//            ax = (tractorLocation.getX() < targetLocation.getX()) ? 1 : -1;
+//        } else {
+//            ay = (tractorLocation.getY() < targetLocation.getY()) ? 1 : -1;
+//        }
+//        int xToWrite = tractorLocation.getX() + ax;
+//        int yToWrite = tractorLocation.getY() + ay;
+////        tractorLocation.setX(xToWrite < 1 ? 1 : xToWrite > 10 ? 10 : xToWrite);
+////        tractorLocation.setY(yToWrite < 1 ? 1 : yToWrite > 10 ? 10 : yToWrite);
+        Location target = Tractor.getInstance().getTargetLocation();
         int x = tractorLocation.getX();
         int y = tractorLocation.getY();
-
-        Random random = new Random();
-
-        boolean axis;
-        if (abs(targetLocation.getX() - tractorLocation.getX()) <= 1 &&
-                abs(targetLocation.getY() - tractorLocation.getY()) <= 1) {
-            return true;
-        } else if (targetLocation.getX() == tractorLocation.getY()) {
-            axis = false;
-        } else if (targetLocation.getX() == tractorLocation.getY()) {
-            axis = true;
-        } else {
-            axis = (random.nextBoolean());
+        int tx = target.getX();
+        int ty = target.getY();
+        int xToWrite = x;
+        int yToWrite = y;
+        boolean toReturn = false;
+        if (tx == x && ty == y) return true;
+        if (tx > x) {
+            xToWrite++;
+        } else if (tx < x) {
+            xToWrite--;
+        } else if (tx == x) {
+            if (ty > y) {
+                yToWrite++;
+            } else if (ty < y) {
+                yToWrite--;
+            } else {
+                return true;
+            }
         }
-
-        int ax = 0;
-        int ay = 0;
-        if (axis) {
-            ax = (tractorLocation.getX() < targetLocation.getX()) ? 1 : -1;
-        } else {
-            ay = (tractorLocation.getY() < targetLocation.getY()) ? 1 : -1;
-        }
-        int xToWrite = tractorLocation.getX() + ax;
-        int yToWrite = tractorLocation.getY() + ay;
-        tractorLocation.setX(xToWrite < 0 ? 0 : xToWrite > 4 ? 4 : xToWrite);
-        tractorLocation.setY(yToWrite < 0 ? 0 : yToWrite > 4 ? 4 : yToWrite);
-        return false;
+        Location l = new Location(xToWrite, yToWrite);
+        Tractor.getInstance().setLocation(l);
+        return toReturn;
     }
 
 }
