@@ -7,6 +7,7 @@ import pl.edu.amu.dszi.model.weather.Weather;
 import pl.edu.amu.dszi.model.weather.WeatherChanger;
 import pl.edu.amu.dszi.pkg2016.Main;
 import pl.edu.amu.dszi.pkg2016.WeatherObserver;
+import sun.reflect.generics.tree.Tree;
 
 import static pl.edu.amu.dszi.pkg2016.Main.DEBUG;
 
@@ -88,7 +89,7 @@ public class Tractor extends Observable implements Observer {
         }
         decisions.put(IRRIGATION, l);
         setChanged();
-        notifyObservers(decisions);
+        notifyObservers(IRRIGATION);
     }
 
     public void makeFertilizationDecision(Field f) throws Exception {
@@ -118,7 +119,7 @@ public class Tractor extends Observable implements Observer {
         }
         decisions.put(FERTILIZATION, l);
         setChanged();
-        notifyObservers(decisions);
+        notifyObservers(FERTILIZATION);
     }
 
     public void setTargetLocation(Location target) {
@@ -138,5 +139,8 @@ public class Tractor extends Observable implements Observer {
                 notifyObservers(arg);
             }
         }
+    }
+    public TreeMap<String, LevelledDecision> getDecisions() {
+        return this.decisions;
     }
 }

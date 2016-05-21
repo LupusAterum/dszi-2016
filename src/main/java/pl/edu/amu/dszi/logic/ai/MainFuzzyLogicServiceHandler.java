@@ -1,9 +1,8 @@
 package pl.edu.amu.dszi.logic.ai;
 
 import pl.edu.amu.dszi.abstractClasses.FieldPriorityHandler;
-import pl.edu.amu.dszi.model.FieldDegradator;
+import pl.edu.amu.dszi.model.FieldValueChanger;
 import pl.edu.amu.dszi.model.FieldHandler;
-import pl.edu.amu.dszi.model.LevelledDecision;
 import pl.edu.amu.dszi.model.field.Location;
 import pl.edu.amu.dszi.logic.tractor.MainTractorMovementLogicService;
 import pl.edu.amu.dszi.logic.tractor.TractorFieldPriorityHandler;
@@ -46,7 +45,7 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
             e.printStackTrace();
         }
         fieldHandler = FieldHandler.getInstance();
-        FieldDegradator.getInstance().addObserver(this);
+        FieldValueChanger.getInstance().addObserver(this);
 
         decisionEvaluator = new DecisionEvaluator();
         Location tractorLocation = new Location(3, 2);
@@ -78,6 +77,7 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
                         f.getIrrigation(), f.getSoilRichness(), f.getPriority(), f.getLocation().getX(), f.getLocation().getY());
             }
         }
+        fieldHandler.notifyThatAllFieldsChanged();
     }
 
 
@@ -91,38 +91,40 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
         do {
             while (!mainTractorMovementLogicService.calculateTractorTurn()) {
                 try {
-//                    Thread.sleep(Tractor.getInstance().getLocation().getManhattanDistanceTo(mainTractorMovementLogicService.getTargetLocation()) * 1000);
                     Thread.sleep(1000);
-                    //Tractor.getInstance().setLocation(mainTractorMovementLogicService.getTargetLocation());
-                } catch (InterruptedException e) {
+                    if (Main.DEBUG) {
+                        System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
+                        System.out.printf("Target X: %d Y: %d\n", Tractor.getInstance().getTargetLocation().getX(), Tractor.getInstance().getTargetLocation().getY());
+                    }
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
-            windowManager.repaint();
-            System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
-            System.out.printf("Target X: %d Y: %d\n", Tractor.getInstance().getTargetLocation().getX(), Tractor.getInstance().getTargetLocation().getY());
-        }
-        Field f = getFieldWhichTractorIsStandingOn();
-        try {
-            System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
-            System.out.printf("Target X: %d Y: %d\n", Tractor.getInstance().getTargetLocation().getX(), Tractor.getInstance().getTargetLocation().getY());
-            Tractor.getInstance().makeFertilizationDecision(f);
-            Tractor.getInstance().makeIrrigationDecision(f);
-            calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
-            Tractor.getInstance().setTargetLocation(fieldHandler.maxPriorityField().getLocation());
-            windowManager.repaint();
+                windowManager.repaint();
+            }
+            Field f = getFieldWhichTractorIsStandingOn();
+            try {
+                if(Main.DEBUG) {
+                    System.out.printf("X: %d Y: %d\n", Tractor.getInstance().getLocation().getX(), Tractor.getInstance().getLocation().getY());
+                    System.out.printf("Target X: %d Y: %d\n", Tractor.getInstance().getTargetLocation().getX(), Tractor.getInstance().getTargetLocation().getY());
+                }
+                Tractor.getInstance().makeFertilizationDecision(f);
+                Tractor.getInstance().makeIrrigationDecision(f);
+                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
+                Tractor.getInstance().setTargetLocation(fieldHandler.maxPriorityField().getLocation());
+                windowManager.repaint();
 
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
+
+        while (!end);
     }
-
-    while(!end);
-}
 
     @Override
     public void update(Observable o, Object arg) {
-        if(o instanceof FieldDegradator) {
-            if(arg == null) {
+        if (o instanceof FieldValueChanger) {
+            if (arg == null) {
 
                 calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
             }

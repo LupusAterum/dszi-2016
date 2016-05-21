@@ -50,10 +50,13 @@ public class FieldHandler extends Observable {
     }
     public synchronized void setFieldPriorityAt(Location location, double priority) {
         fields.get(location).setPriority(priority);
+//        setChanged();
+//        notifyObservers(fields);
+    }
+    public void notifyThatAllFieldsChanged() {
         setChanged();
         notifyObservers(fields);
     }
-
     public synchronized Field getFieldAt(Location location) {
         return fields.get(location);
     }

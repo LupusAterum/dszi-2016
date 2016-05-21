@@ -34,7 +34,9 @@ public class Field implements Comparable<Field> {
     }
 
     public void setIrrigation(Double irrigation) {
-        this.irrigation = irrigation;
+        if(irrigation < 0) this.irrigation = 0d;
+        else if(irrigation > 100) this.irrigation = 100d;
+        else this.irrigation = irrigation;
     }
 
     public Double getSoilRichness() {
@@ -42,7 +44,9 @@ public class Field implements Comparable<Field> {
     }
 
     public void setSoilRichness(Double soilRichness) {
-        this.soilRichness = soilRichness;
+        if(soilRichness < 0) this.soilRichness = 0d;
+        else if(soilRichness > 100) this.soilRichness = 100d;
+        else this.soilRichness = soilRichness;
     }
 
     public Location getLocation() {
@@ -67,10 +71,11 @@ public class Field implements Comparable<Field> {
         return (int) result;
     }
     public void degrade(int irrDeg, int soilDeg) {
-        irrigation -= irrDeg;
-        soilRichness -= soilDeg;
-        if(irrigation < 0) irrigation = 0d;
-        if(soilRichness < 0) soilRichness = 0d;
+        setIrrigation(irrigation - irrDeg);
+        setSoilRichness(soilRichness - soilDeg);
+    }
+    private void doNothing() {
+
     }
     //</editor-fold>
 }

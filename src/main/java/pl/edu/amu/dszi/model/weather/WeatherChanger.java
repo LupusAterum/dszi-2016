@@ -1,6 +1,7 @@
 package pl.edu.amu.dszi.model.weather;
 
 import pl.edu.amu.dszi.abstractClasses.GenericObservableRunnable;
+import pl.edu.amu.dszi.pkg2016.Main;
 
 import static net.java.quickcheck.generator.PrimitiveGeneratorSamples.anyEnumValue;
 
@@ -32,7 +33,9 @@ public class WeatherChanger extends GenericObservableRunnable {
         while (!endThread) {
             changeWeather();
             notifyObservers(currentWeather);
-            System.out.println("Wheater Change");
+            if(Main.DEBUG) {
+                System.out.println("Weather Change");
+            }
             try {
                 Thread.sleep(generationRateMillis);
             } catch (InterruptedException e) {
