@@ -8,7 +8,8 @@ public enum GrassType {
     OK_GRASS(0, 25),
     NEGLECTED_GRASS(26, 50),
     URGENT_ATTENTION_GRASS(51, 75),
-    TO_TOTAL_RECLAMATION_GRASS(76, 100);
+    TO_TOTAL_RECLAMATION_GRASS(76, 100),
+    TREE(-1, -1);
 
     public Integer a;
 

@@ -5,6 +5,9 @@
  */
 package pl.edu.amu.dszi.model.field;
 
+import org.xguzm.pathfinding.NavigationNode;
+import org.xguzm.pathfinding.grid.NavigationGridGraphNode;
+
 /**
  * @author Karol Mazurek <kmazurek93@gmail.com>
  */
@@ -14,6 +17,16 @@ public class Field implements Comparable<Field> {
     private Double soilRichness;
     private Location location;
     private Double priority;
+
+    public Boolean getWalkable() {
+        return walkable;
+    }
+
+    public void setWalkable(Boolean walkable) {
+        this.walkable = walkable;
+    }
+
+    private Boolean walkable;
 
     public Field(Double irrigation, Double soilRichness) {
         this.irrigation = irrigation;
@@ -71,8 +84,10 @@ public class Field implements Comparable<Field> {
         return (int) result;
     }
     public void degrade(int irrDeg, int soilDeg) {
-        setIrrigation(irrigation - irrDeg);
-        setSoilRichness(soilRichness - soilDeg);
+        if(walkable) {
+            setIrrigation(irrigation - irrDeg);
+            setSoilRichness(soilRichness - soilDeg);
+        }
     }
     private void doNothing() {
 
