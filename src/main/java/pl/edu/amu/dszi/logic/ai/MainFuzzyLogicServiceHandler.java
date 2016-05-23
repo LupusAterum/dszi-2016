@@ -48,7 +48,7 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
         FieldValueChanger.getInstance().addObserver(this);
 
         decisionEvaluator = new DecisionEvaluator();
-        Location tractorLocation = new Location(3, 2);
+        Location tractorLocation = new Location(1, 1);
         calculatePriorities(tractorLocation, fieldHandler.getFields());
 
         tractor = Tractor.getInstance();
