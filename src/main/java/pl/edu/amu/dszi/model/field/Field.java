@@ -84,8 +84,10 @@ public class Field implements Comparable<Field> {
         return (int) result;
     }
     public void degrade(int irrDeg, int soilDeg) {
-        setIrrigation(irrigation - irrDeg);
-        setSoilRichness(soilRichness - soilDeg);
+        if(walkable) {
+            setIrrigation(irrigation - irrDeg);
+            setSoilRichness(soilRichness - soilDeg);
+        }
     }
     private void doNothing() {
 
