@@ -35,6 +35,7 @@ shadowJar {
 
 
 dependencies {
+    compile "com.github.xaguzman:pathfinding:0.2.6"
     compile fileTree(dir: 'lib', include: ['*.jar'])
     compile group: 'nz.ac.waikato.cms.weka', name: 'weka-stable', version: '3.8.0' //WEKA
     compile group: 'net.java', name: 'quickcheck', version: '0.6'

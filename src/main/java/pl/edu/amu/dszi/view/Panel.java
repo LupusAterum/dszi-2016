@@ -5,6 +5,7 @@ import pl.edu.amu.dszi.model.field.Location;
 import pl.edu.amu.dszi.model.field.Field;
 import pl.edu.amu.dszi.model.field.GrassType;
 import pl.edu.amu.dszi.model.Tractor;
+import pl.edu.amu.dszi.util.Pair;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class Panel extends JPanel implements Observer {
     private static BufferedImage urgentAttentionGrass;
     private static BufferedImage toTotalReclamation;
     private static BufferedImage tractorImage;
-
+    private static BufferedImage treeImage;
 
     private Tractor tractor;
 
@@ -36,14 +37,16 @@ public class Panel extends JPanel implements Observer {
         loadImages();
     }
 
+    TreeMap<Location, Field> fieldMap = null;
+
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.setColor(Color.WHITE);
-        TreeMap<Location, Field> fieldMap = null;
         while(fieldMap == null) {
             fieldMap = FieldHandler.getInstance().getFields();
         }
+
         for (Map.Entry<Location, Field> entry : fieldMap.entrySet()) {
             Location location = entry.getKey();
             if (GrassType.NEGLECTED_GRASS.inRange(entry.getValue().getPriority().intValue())) {
@@ -56,8 +59,11 @@ public class Panel extends JPanel implements Observer {
                 drawField(g, toTotalReclamation, location);
             }
         }
-        drawField(g, tractorImage, tractor.getLocation());
 
+        drawField(g, tractorImage, tractor.getLocation());
+        for (Pair pair : FieldHandler.getInstance().treeLocations) {
+            drawField(g, treeImage, new Location(pair.getA(), pair.getB()));
+        }
     }
 
     public void loadImages() {
@@ -67,6 +73,7 @@ public class Panel extends JPanel implements Observer {
             urgentAttentionGrass = ImageIO.read(new File("res/trawa3.png"));
             toTotalReclamation = ImageIO.read(new File("res/trawa4.png"));
             tractorImage = ImageIO.read(new File("res/traktor1.png"));
+            treeImage = ImageIO.read(new File("res/drzewo.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -35,6 +35,9 @@ public class TractorFieldPriorityHandler implements FieldPriorityHandler {
 
     @Override
     public Double getFieldPriority(Field field, Location2D location) {
+        if (!field.getWalkable()) {
+           return  -1.0d;
+        }
         fuzzyLogicHandler.setVariable("irrigation", field.getIrrigation());
         fuzzyLogicHandler.setVariable("soilRichness", field.getSoilRichness());
         Double calculatedDistance;
