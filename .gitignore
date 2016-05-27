@@ -28,3 +28,10 @@ nbproject/build-impl.xml
 nbproject/genfiles.properties
 nbproject/project.properties
 nbproject/project.xml
+/bin/
+
+.classpath
+.project
+.settings/gradle/org.springsource.ide.eclipse.gradle.core.import.prefs
+.settings/gradle/org.springsource.ide.eclipse.gradle.core.prefs
+.settings/gradle/org.springsource.ide.eclipse.gradle.refresh.prefs

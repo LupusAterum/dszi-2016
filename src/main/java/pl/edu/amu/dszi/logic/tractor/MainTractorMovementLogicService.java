@@ -98,8 +98,17 @@ public class MainTractorMovementLogicService {
 //        Tractor.getInstance().setLocation(l);
         Location location2 = Tractor.getInstance().getTargetLocation();
         processAstar(tractorLocation, location2);
-        Location location = new Location(pathToEnd.get(i).getX(), pathToEnd.get(i).getY());
-        Tractor.getInstance().setLocation(location);
+        System.out.println(pathToEnd.size());
+        try{
+	        Location location = new Location(pathToEnd.get(i).getX(), pathToEnd.get(i).getY());
+	        Tractor.getInstance().setLocation(location);
+        }catch(IndexOutOfBoundsException e){
+        	//e.printStackTrace();
+        	Tractor.getInstance().setTargetLocation(FieldHandler.getInstance().secondMaxPriorityField().getLocation());
+            return false;
+
+        }
+
         if (i == (pathToEnd.size() - 1)) {
             i = 0;
             pathToEnd = null;
@@ -124,7 +133,7 @@ public class MainTractorMovementLogicService {
 
         AStarGridFinder<GridCell> finder = new AStarGridFinder<GridCell>(GridCell.class, opt);
 
-        if (pathToEnd == null) {
+        if (pathToEnd == null || pathToEnd.size()==0) {
             pathToEnd = finder.findPath(
                     inputLocation.getX(), inputLocation.getY(),
                     targetLocation.getX(), targetLocation.getY(),

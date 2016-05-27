@@ -105,6 +105,23 @@ public class FieldHandler extends Observable {
         }
         return fields.get(l);
     }
+    public synchronized Field secondMaxPriorityField() {
+        double max = 0;
+        double second = 0;
+        Location l = new Location(0, 0);
+        for (Map.Entry<Location, Field> entry : fields.entrySet()) {
+            if ((max <= entry.getValue().getPriority()) && entry.getValue().getWalkable()) {
+                max = entry.getValue().getPriority();
+            }
+            else{
+            	if(second < entry.getValue().getPriority() && entry.getValue().getWalkable()){
+                    second = entry.getValue().getPriority();
+                    l = entry.getKey();
+            	}
+            }
+        }
+        return fields.get(l);
+    }
 
     public synchronized void calculatePriorites(Location tractorLocation) {
 
