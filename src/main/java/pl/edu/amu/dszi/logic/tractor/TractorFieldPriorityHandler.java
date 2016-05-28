@@ -51,6 +51,24 @@ public class TractorFieldPriorityHandler implements FieldPriorityHandler {
         Double priority = fuzzyLogicHandler.getVariable("priority").getValue();
         return priority;
     }
+    @Override
+    public Double getFieldPriorityWithWeights(Field field, Location2D location, double irrWeight, double soilWeight, double distanceWeight) {
+        if (!field.getWalkable()) {
+           return  -1.0d;
+        }
+        fuzzyLogicHandler.setVariable("irrigation", field.getIrrigation()*irrWeight);
+        fuzzyLogicHandler.setVariable("soilRichness", field.getSoilRichness()*soilWeight);
+        Double calculatedDistance;
+        Double manhattanDistance = (double) location.getManhattanDistanceTo(field.getLocation());
+
+        calculatedDistance = (manhattanDistance / maxDistance()) * 100;
+        fuzzyLogicHandler.setVariable("distance", calculatedDistance*distanceWeight);
+
+        fuzzyLogicHandler.evaluate();
+
+        Double priority = fuzzyLogicHandler.getVariable("priority").getValue();
+        return priority;
+    }
 
     private Double maxDistance() {
         return (double) xSize + ySize - 2.0;

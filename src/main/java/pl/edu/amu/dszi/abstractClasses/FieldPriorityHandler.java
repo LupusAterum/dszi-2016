@@ -14,5 +14,6 @@ import pl.edu.amu.dszi.model.field.Field;
 public interface FieldPriorityHandler {
     
     public Double getFieldPriority(Field field, Location2D location);
+    public Double getFieldPriorityWithWeights(Field field, Location2D location, double irrWeight, double soilWeight, double distanceWeight);
     
 }

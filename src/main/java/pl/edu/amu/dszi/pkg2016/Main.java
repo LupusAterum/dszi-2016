@@ -17,16 +17,22 @@ import pl.edu.amu.dszi.view.DiagnosticWindow;
 //this is test case!!!
 public class Main {
     public static boolean DEBUG = false;
+    public static boolean optymalizeSwitch = false;
     public static void main(String[] args) throws Exception {
-        WeatherChanger.getInstance().addObserver(Tractor.getInstance());
-        Thread weatherChangerThread = new Thread(WeatherChanger.getInstance());
-        weatherChangerThread.start();
-        MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
-        Thread mainFuzzyLogicThread = new Thread(mainFuzzyLogicServiceHandler);
-        mainFuzzyLogicThread.start();
-        DiagnosticWindow.main(args);
-        Thread fieldDegradeThread = new Thread(FieldValueChanger.getInstance());
-        fieldDegradeThread.start();
+    	if(!optymalizeSwitch){
+	        WeatherChanger.getInstance().addObserver(Tractor.getInstance());
+	        Thread weatherChangerThread = new Thread(WeatherChanger.getInstance());
+	        weatherChangerThread.start();
+	        MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
+	        Thread mainFuzzyLogicThread = new Thread(mainFuzzyLogicServiceHandler);
+	        mainFuzzyLogicThread.start();
+	        DiagnosticWindow.main(args);
+	        Thread fieldDegradeThread = new Thread(FieldValueChanger.getInstance());
+	        fieldDegradeThread.start();
+    	}
+    	else{
+    		
+    	}
 
     }
 

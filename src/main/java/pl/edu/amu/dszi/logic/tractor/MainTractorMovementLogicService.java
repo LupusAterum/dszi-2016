@@ -98,7 +98,7 @@ public class MainTractorMovementLogicService {
 //        Tractor.getInstance().setLocation(l);
         Location location2 = Tractor.getInstance().getTargetLocation();
         processAstar(tractorLocation, location2);
-        System.out.println(pathToEnd.size());
+        //System.out.println(pathToEnd.size());
         try{
 	        Location location = new Location(pathToEnd.get(i).getX(), pathToEnd.get(i).getY());
 	        Tractor.getInstance().setLocation(location);
