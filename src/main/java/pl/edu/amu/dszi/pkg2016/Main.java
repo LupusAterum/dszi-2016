@@ -18,6 +18,18 @@ import pl.edu.amu.dszi.view.DiagnosticWindow;
 public class Main {
     public static boolean DEBUG = false;
     public static boolean optymalizeSwitch = false;
+    //optymalimaze params
+    public static double roundNumber;
+    public static double actualAverageResult;
+    public static double bestAverageResult;
+    
+    public static double actualIrrigationWeight;
+    public static double actualSoilRichnessWeight;
+    public static double actualDistanceWeight;
+    public static double bestIrrigationWeight;
+    public static double bestSoilRichnessWeitght;
+    public static double bestDistanceWeight;
+    //end
     public static void main(String[] args) throws Exception {
     	if(!optymalizeSwitch){
 	        WeatherChanger.getInstance().addObserver(Tractor.getInstance());
@@ -31,7 +43,20 @@ public class Main {
 	        fieldDegradeThread.start();
     	}
     	else{
-    		
+            actualIrrigationWeight = 1;
+            actualSoilRichnessWeight = 1;
+            actualDistanceWeight = 1;
+            roundNumber=0;
+    		WeatherChanger.getInstance().addObserver(Tractor.getInstance());
+	        Thread weatherChangerThread = new Thread(WeatherChanger.getInstance());
+	        weatherChangerThread.start();
+	        MainFuzzyLogicServiceHandler mainFuzzyLogicServiceHandler = new MainFuzzyLogicServiceHandler();
+	        Thread mainFuzzyLogicThread = new Thread(mainFuzzyLogicServiceHandler);
+	        mainFuzzyLogicThread.start();
+	        DiagnosticWindow.main(args);
+	        Thread fieldDegradeThread = new Thread(FieldValueChanger.getInstance());
+	        fieldDegradeThread.start();
+
     	}
 
     }

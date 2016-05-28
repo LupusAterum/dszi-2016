@@ -4,6 +4,7 @@ import pl.edu.amu.dszi.model.field.Field;
 import pl.edu.amu.dszi.model.field.Location;
 import pl.edu.amu.dszi.model.weather.Weather;
 import pl.edu.amu.dszi.model.weather.WeatherChanger;
+import pl.edu.amu.dszi.pkg2016.Main;
 
 import java.util.Map;
 import java.util.Observable;
@@ -34,6 +35,11 @@ public class FieldValueChanger extends Observable implements Runnable, Observer 
     @Override
     public void run() {
         while (!end) {
+        	if(Main.optymalizeSwitch){
+        		if(Main.roundNumber >= 100){
+        			break;
+        		}
+        	}
             try {
                 Thread.sleep(60 * 1000);
             } catch (InterruptedException e) {

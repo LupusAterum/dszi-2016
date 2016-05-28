@@ -31,6 +31,11 @@ public class WeatherChanger extends GenericObservableRunnable {
     @Override
     public void run() {
         while (!endThread) {
+        	if(Main.optymalizeSwitch){
+        		if(Main.roundNumber >= 100){
+        			break;
+        		}
+        	}
             changeWeather();
             notifyObservers(currentWeather);
             if(Main.DEBUG) {

@@ -28,7 +28,9 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
     private FieldHandler fieldHandler;
     private double prioritySum;
     private double averagePriority;
-    private int roundNumber = 1;
+    private double irrigationWeight;
+    private double soilRichnessWeight;
+    private double distanceWeight;
 
 	WeatherObserver weatherObserver = new WeatherObserver();
     Thread weatherChangerThread;
@@ -50,20 +52,24 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
         }
         if(Main.optymalizeSwitch){
         	averagePriority = 0;
-        	roundNumber = 1;
         	prioritySum = 0;
+        	irrigationWeight = Main.actualIrrigationWeight;
+            soilRichnessWeight = Main.actualSoilRichnessWeight;
+            distanceWeight = Main.actualDistanceWeight;
+        }
+        if(!Main.optymalizeSwitch){
+            irrigationWeight = 1;
+            soilRichnessWeight = 1;
+            distanceWeight = 1;
         }
         fieldHandler = FieldHandler.getInstance();
         FieldValueChanger.getInstance().addObserver(this);
 
         decisionEvaluator = new DecisionEvaluator();
         Location tractorLocation = new Location(1, 1);
-        if(!Main.optymalizeSwitch){
-        	calculatePriorities(tractorLocation, fieldHandler.getFields(),1,1,1);
-        }
-        else{
-        	
-        }
+
+        calculatePriorities(tractorLocation, fieldHandler.getFields());
+
         tractor = Tractor.getInstance();
         tractor.setLocation(tractorLocation);
         windowManager = new WindowManager();
@@ -74,15 +80,16 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
         weatherChangerThread = new Thread(WeatherChanger.getInstance());
         WeatherChanger.getInstance().addObserver(weatherObserver);
         weatherChangerThread.start();
-
+        //System.out.println("pre");
         mainTractorMovementLogicService
                 = new MainTractorMovementLogicService();
+        //System.out.println("after");
     }
 
-    private void calculatePriorities(Location tractorLocation, TreeMap<Location, Field> fields, double irrWeight, double soilWeight, double distanceWeight) {
+    private void calculatePriorities(Location tractorLocation, TreeMap<Location, Field> fields) {
         for (Map.Entry<Location, Field> entry : fields.entrySet()) {
             Field f = entry.getValue();
-            fieldHandler.setFieldPriorityAt(entry.getKey(), handler.getFieldPriorityWithWeights(f, tractorLocation,irrWeight,soilWeight,distanceWeight));
+            fieldHandler.setFieldPriorityAt(entry.getKey(), handler.getFieldPriorityWithWeights(f, tractorLocation,irrigationWeight,soilRichnessWeight,distanceWeight));
             if(Main.optymalizeSwitch){
             	prioritySum = prioritySum + f.getPriority();
             }
@@ -124,12 +131,17 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
                 }
                 Tractor.getInstance().makeFertilizationDecision(f);
                 Tractor.getInstance().makeIrrigationDecision(f);
-                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields(),1,1,1);
+                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
                 if(Main.optymalizeSwitch){
-                	averagePriority = (averagePriority*roundNumber + prioritySum)/(roundNumber+1);
+                	averagePriority = (averagePriority*Main.roundNumber + prioritySum)/(Main.roundNumber+1);
                 	prioritySum =0;
-                	roundNumber++;
-                	if(roundNumber == 2000){}
+                	Main.roundNumber++;
+                	System.out.println("round nr: "+Main.roundNumber);
+                	if(Main.roundNumber >= 100){
+                		Main.actualAverageResult=averagePriority;
+                		System.out.println(averagePriority);
+                		break;
+                	}
                 }
                 Tractor.getInstance().setTargetLocation(fieldHandler.maxPriorityField().getLocation());
                 windowManager.repaint();
@@ -147,7 +159,7 @@ public class MainFuzzyLogicServiceHandler implements Runnable, Observer {
         if (o instanceof FieldValueChanger) {
             if (arg == null) {
 
-                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields(),1,1,1);
+                calculatePriorities(Tractor.getInstance().getLocation(), fieldHandler.getFields());
             }
         }
     }
