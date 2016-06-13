@@ -35,8 +35,8 @@ public class DecisionEvaluator {
 
     }
 
-    public LevelledDecision calassifyFertilization(double priority, double soilRichness,
-                                                   double irrigation) throws Exception {
+    public LevelledDecision classifyFertilization(double priority, double soilRichness,
+                                                  double irrigation) throws Exception {
         Instance currentInstance = new DenseInstance(4);
         currentInstance.setValue(0, priority);
         currentInstance.setValue(1, soilRichness);

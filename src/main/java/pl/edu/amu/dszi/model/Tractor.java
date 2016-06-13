@@ -5,9 +5,7 @@ import pl.edu.amu.dszi.model.field.Field;
 import pl.edu.amu.dszi.model.field.Location;
 import pl.edu.amu.dszi.model.weather.Weather;
 import pl.edu.amu.dszi.model.weather.WeatherChanger;
-import pl.edu.amu.dszi.pkg2016.Main;
 import pl.edu.amu.dszi.pkg2016.WeatherObserver;
-import sun.reflect.generics.tree.Tree;
 
 import static pl.edu.amu.dszi.pkg2016.Main.DEBUG;
 
@@ -94,7 +92,7 @@ public class Tractor extends Observable implements Observer {
 
     public void makeFertilizationDecision(Field f) throws Exception {
 
-        LevelledDecision l = decisionEvaluator.calassifyFertilization(f.getPriority(),
+        LevelledDecision l = decisionEvaluator.classifyFertilization(f.getPriority(),
                 f.getSoilRichness(), f.getIrrigation());
         if (DEBUG) {
             System.out.println("fert dec:" + l);
